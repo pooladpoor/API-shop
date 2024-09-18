@@ -1,7 +1,11 @@
 from django.urls import path
+from .views import *
+
 
 app_name = 'accuont'
 
 urlpatterns = [
-    # path('admin/', ),
+    path('api-token-auth/', CustomAuthToken.as_view()),
+
+    # path('singup/', ),
 ]
