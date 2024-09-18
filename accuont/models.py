@@ -6,8 +6,8 @@ from .manager import UserManager
 
 class User(AbstractBaseUser):
     full_name       = models.CharField(max_length=30)
-    date_of_birth   = models.DateField(null=True, blank=True,default=None)
-    adress          = models.CharField(max_length=255)
+    date_of_birth   = models.DateField(null=True, blank=True, default=None)
+    adress          = models.CharField(max_length=255, null=True, blank=True, default=None)
     national_code   = models.CharField(max_length=10, unique=True)
     phone           = models.CharField(max_length=11, unique=True)
     is_active       = models.BooleanField(default=True)

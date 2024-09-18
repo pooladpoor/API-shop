@@ -6,6 +6,5 @@ app_name = 'accuont'
 
 urlpatterns = [
     path('api-token-auth/', CustomAuthToken.as_view()),
-
-    # path('singup/', ),
+    path('singup/', SignUpViews.as_view()),
 ]

@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
+from .models import User
 
 
 class CustomAuthToken(ObtainAuthToken):
@@ -23,32 +24,19 @@ class CustomAuthToken(ObtainAuthToken):
         return Response({'error': 'The national code or password is invalid'}, status=400)
 
 
-
-
-
-
-
-
-
-
-
-#  جواب نداد چون هر ریکوست جدا برسی میشه و تو درخواست بعدی دیگه لاگین نیست
-# class login(APIView):
-#     def post(self, request:Request):
-#         data = request.data
-#         print("data: ", data)
-#         print("user: ",request.user)
-#
-#         try:
-#             nc = data["national_code"]
-#             p = data["password"]
-#         except:
-#             return Response({"national_code":"...", "password":"..."}, status=status.HTTP_400_BAD_REQUEST)
-#
-#         user = authenticate(request, national_code=nc, password=p)
-#         print("user: ", user)
-#         if user is not None:
-#             login(request=request,user=user)
-#             return Response(None, status=status.HTTP_202_ACCEPTED)
-#         else:
-#             return Response(None, status=status.HTTP_406_NOT_ACCEPTABLE)
+class SignUpViews(APIView):
+    def post(self, reqest: Request):
+        data = reqest.data
+        try:
+            User.objects.create_user(
+            full_name       =data.get("full_name"),
+            phone           =data.get("phone"),
+            national_code   =data.get("national_code"),
+            password        =data.get("password"),
+            date_of_birth   =None,
+            adress          =None,
+            )
+            return Response(None, status=status.HTTP_201_CREATED)
+        
+        except KeyError:
+            return Response({'error': 'The information is invalid'}, status=status.HTTP_400_BAD_REQUEST)
