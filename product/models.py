@@ -14,4 +14,5 @@ class Product(models.Model):
     size        = models.IntegerField(choices=SIZE_CHOICES)
     stock       = models.PositiveIntegerField(default=0)  # تعداد موجودی محصول
 
-    
+    def __str__(self):
+        return f"{self.color} {self.name}"

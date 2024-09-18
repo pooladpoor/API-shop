@@ -15,6 +15,10 @@ class Cart(models.Model):
     def total_price(self):
         return sum(item.total_price for item in self.cart_items.all())
     
+    @property
+    def items(self):
+        return [str(item) for item in self.cart_items.all()]
+ 
     
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, related_name='cart_items', on_delete=models.CASCADE)
@@ -22,9 +26,10 @@ class CartItem(models.Model):
     quantity = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return f"{self.quantity} x {self.product.name}"
+        return f"{self.quantity} x {self.product}"
 
     @property
     def total_price(self):
         """محاسبه قیمت کل این آیتم (تعداد محصول * قیمت واحد)"""
         return self.quantity * self.product.price
+    
