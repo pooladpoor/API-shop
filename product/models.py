@@ -1,4 +1,5 @@
 from django.db import models
+from accuont.models import User
 
 class Product(models.Model):
     
@@ -16,3 +17,9 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.color} {self.name}"
+    
+    
+class Coment(models.Model):
+    product     = models.ForeignKey(Product, related_name="coments",on_delete=models.CASCADE)
+    user        = models.ForeignKey(User, related_name="coments", on_delete=models.CASCADE)
+    text        = models.TextField()
