@@ -134,6 +134,9 @@ AUTH_USER_MODEL = "accuont.User"
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',  # نوع صفحه بندی
+    'PAGE_SIZE': 1,
+
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ]
