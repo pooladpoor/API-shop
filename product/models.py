@@ -1,6 +1,13 @@
 from django.db import models
 from accuont.models import User
 
+
+class Category(models.Model):
+    title = models.CharField(max_length=30)
+    
+    def __str__(self):
+        return self.title
+
 class Product(models.Model):
     
     SIZE_CHOICES = [
@@ -9,6 +16,7 @@ class Product(models.Model):
         (3, 3),
     ]
     
+    category    = models.ManyToManyField(Category, related_name="product")
     name        = models.CharField(max_length=30)
     price        = models.PositiveIntegerField(default=0)
     color       = models.CharField(max_length=20)
