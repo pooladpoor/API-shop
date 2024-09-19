@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from drf_spectacular.utils import extend_schema
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
@@ -9,16 +10,21 @@ from rest_framework import status
 
 
 class CartViews(APIView):
+    @extend_schema(
+        summary="جزئیات سبد خرید کاربر",
+        responses=CartSerializer
+    )
     def get(self, request: Request):
         user = request.user
         cart = get_object_or_404(Cart, user=user)
-        serializer = CartSerializer(cart).data
-        print(serializer)
-        print(type(serializer))
-        return Response(serializer, status=status.HTTP_200_OK)
+        serializer = CartSerializer(cart)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     
 class CartPaidViews(APIView):
+    @extend_schema(
+        summary="هزینه سبد خرید پرداخت میشود",
+    )
     def post(self, request: Request):
         user = request.user
         cart = get_object_or_404(Cart, user=user)

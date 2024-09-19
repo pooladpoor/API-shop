@@ -151,3 +151,22 @@ REST_FRAMEWORK = {
 # save ing image
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+# documenting
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'API Documentation',
+    'DESCRIPTION': 'API for shop',
+    'VERSION': '1.0.0',
+    # 'TERMS_OF_SERVICE': 'https://example.com/terms/',
+    'CONTACT': {
+        'name': 'API Support',
+        'email': 'pwladpwr@gmai.com',
+        # 'url': 'https://example.com/contact/',
+    },
+    # 'LICENSE': {
+    #     'name': 'MIT License',
+    #     'url': 'https://opensource.org/licenses/MIT',
+    # },
+    # 'SERVE_INCLUDE_SCHEMA': False,
+}
