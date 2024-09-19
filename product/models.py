@@ -8,6 +8,7 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
+
 class Product(models.Model):
     
     SIZE_CHOICES = [
@@ -16,9 +17,10 @@ class Product(models.Model):
         (3, 3),
     ]
     
+    image       = models.ImageField(upload_to="product_images/", default="product_images/default.png")
     category    = models.ManyToManyField(Category, related_name="product")
     name        = models.CharField(max_length=30)
-    price        = models.PositiveIntegerField(default=0)
+    price       = models.PositiveIntegerField(default=0)
     color       = models.CharField(max_length=20)
     size        = models.IntegerField(choices=SIZE_CHOICES)
     stock       = models.PositiveIntegerField(default=0)  # تعداد موجودی محصول
