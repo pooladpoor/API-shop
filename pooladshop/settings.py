@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     "shopping_cart.apps.ShoppingCartConfig",
     'rest_framework',
     'rest_framework.authtoken',
+    
+    # Documenting
+    'drf_spectacular',
+    
 ]
 
 MIDDLEWARE = [
@@ -139,7 +143,9 @@ REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-    ]
+    ],
+    
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 # save ing image

@@ -18,6 +18,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path,include
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
+urlpatterns_documenting = [
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    # path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+]
 
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
@@ -25,7 +32,7 @@ urlpatterns = [
     path("product/",include("product.urls",namespace="product")),
     path("accuont/",include("accuont.urls",namespace="accuont")),
     path("shopping_cart/",include("shopping_cart.urls",namespace="shopping_cart")),
-]
+] + urlpatterns_documenting
 
 
 if settings.DEBUG:
