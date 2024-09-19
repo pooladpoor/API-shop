@@ -5,6 +5,7 @@ from .manager import UserManager
 
 
 class User(AbstractBaseUser):
+    image           = models.ImageField(upload_to="user_images/", default="user_images/default.png")
     full_name       = models.CharField(max_length=30)
     date_of_birth   = models.DateField(null=True, blank=True, default=None)
     adress          = models.CharField(max_length=255, null=True, blank=True, default=None)
