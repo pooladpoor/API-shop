@@ -7,6 +7,7 @@ class Cart(models.Model):
     user        = models.OneToOneField(User,related_name="ShoppingCart", on_delete=models.CASCADE)
     created     = models.DateTimeField(auto_now_add=True)
     updated     = models.DateTimeField(auto_now=True)
+    paid        = models.BooleanField(default=False)
     
     def __str__(self):
         return f"cart of {self.user.full_name}"
