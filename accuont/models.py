@@ -9,15 +9,15 @@ class User(AbstractBaseUser):
     full_name       = models.CharField(max_length=30)
     date_of_birth   = models.DateField(null=True, blank=True, default=None)
     adress          = models.CharField(max_length=255, null=True, blank=True, default=None)
-    national_code   = models.CharField(max_length=10, unique=True)
+    user_name       = models.CharField(max_length=20, unique=True)
+    national_code   = models.CharField(max_length=10, unique=True, null=True, blank=True, default=None)
     phone           = models.CharField(max_length=11, unique=True)
     is_active       = models.BooleanField(default=True)
     is_admin        = models.BooleanField(default=False)
     date_joined     = models.DateField(auto_now_add=True)
-
     objects = UserManager()
 
-    USERNAME_FIELD = "national_code"
+    USERNAME_FIELD = "user_name"
     REQUIRED_FIELDS = ["full_name","phone", "adress"]
 
     def __str__(self):

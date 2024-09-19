@@ -13,9 +13,9 @@ from .models import User
 
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
-        national_code = request.data.get('national_code')
+        user_name = request.data.get('user_name')
         password = request.data.get('password')
-        user = authenticate(national_code=national_code, password=password)
+        user = authenticate(user_name=user_name, password=password)
         if user:
             token, created = Token.objects.get_or_create(user=user)
             return Response({
@@ -31,7 +31,7 @@ class SignUpViews(APIView):
             User.objects.create_user(
             full_name       =data.get("full_name"),
             phone           =data.get("phone"),
-            national_code   =data.get("national_code"),
+            user_name   =data.get("user_name"),
             password        =data.get("password"),
             date_of_birth   =None,
             adress          =None,
