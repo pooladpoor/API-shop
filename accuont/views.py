@@ -43,3 +43,31 @@ class SignUpViews(APIView):
             return Response({'status': 'User successfully created'}, status=status.HTTP_201_CREATED)
         else:
             return Response({'error': 'The information is invalid'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class EditProfile(APIView):
+    @extend_schema(
+        summary="دریافت اطلاعات کاربر",
+        responses=UserSerializer,
+    )
+    def get(self, request:Request):
+        user = request.user
+        serializer = UserSerializer(instance=user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @extend_schema(
+        summary="ارسال اطلاعات برای اپدیت",
+        request=UserSerializer,
+    )
+    def put(self, request: Request):
+        user = request.user
+        data = request.data
+        serializer = UserSerializer(instance=user, data=data)
+        print(serializer)
+        print("__________________")
+        print(data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"Details": "user updated"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"Details": "data is invalid"}, status=status.HTTP_400_BAD_REQUEST)
