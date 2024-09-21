@@ -19,9 +19,9 @@ class CustomAuthToken(ObtainAuthToken):
         description="برای هر کاربر از اینجا توکن ایجاد کنید و در هدر درخواست های بعدی ارسال شود",
     )
     def post(self, request, *args, **kwargs):
-        user_name = request.data.get('user_name')
+        username = request.data.get('username')
         password = request.data.get('password')
-        user = authenticate(user_name=user_name, password=password)
+        user = authenticate(user_name=username, password=password)
         if user:
             token, created = Token.objects.get_or_create(user=user)
             return Response({
