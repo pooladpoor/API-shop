@@ -22,7 +22,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('is_admin', 'is_active')
     fieldsets = (
         (None, {'fields': ('full_name', 'user_name', 'phone', 'password')}),
-        ('Personal info', {'fields': ("image", 'date_of_birth', "adress", "national_code", "date_joined")}),
+        ('Personal info', {'fields': ('date_of_birth', "adress", "national_code", "date_joined")}),
         ('Permissions', {'fields': ('is_admin', 'is_active')}),
     )
     add_fieldsets = (
