@@ -7,11 +7,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
-from .models import Product, Coment
+from .models import Product, Coment, Category
 from shopping_cart.models import CartItem, Cart
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer, CategorytSerializer
 from .serializer import ComentSerializer
 
 # class AddToCartView(LoginRequiredMixin, APIView):
@@ -79,6 +79,12 @@ class AddComent(LoginRequiredMixin, APIView):
             return Response(None, status=status.HTTP_201_CREATED)
         return Response({"eror": "data is not valid"}, status=status.HTTP_400_BAD_REQUEST)
 
+@extend_schema(
+        summary="لیست دسته بندی ها",
+            )
+class CategoryList(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorytSerializer
 
 # region product
 
@@ -88,6 +94,17 @@ class AddComent(LoginRequiredMixin, APIView):
 class ProductList(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+    
+@extend_schema(
+        summary="لیست محصولات بر اساس دسته بندی",
+            )
+class CategoryProductList(APIView):
+    def get(self, request:Request, category_id):
+        category = get_object_or_404(Category, id=category_id)
+        products = Product.objects.all().filter(category=category)
+        seilizer = ProductSerializer(instance=products, many=True)
+        return Response(seilizer.data, status=status.HTTP_200_OK)
 
 
 @extend_schema(
