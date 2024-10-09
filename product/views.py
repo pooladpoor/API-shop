@@ -14,17 +14,20 @@ from django.shortcuts import get_object_or_404
 from .serializers import ProductSerializer, CategorytSerializer
 from .serializer import ComentSerializer
 
-# class AddToCartView(LoginRequiredMixin, APIView):
-#     @extend_schema(
-#         summary="افزودن محضول به سبد خرید",
-#     )
-#     def get(self, request, product_id):
-#         product = get_object_or_404(Product, id=product_id)
-#         cart, created = Cart.objects.get_or_create(user=request.user)
-#         cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-#         cart_item.quantity += 1  # تعداد محصول را افزایش می‌دهد
-#         cart_item.save()
-#         return Response(None, status.HTTP_201_CREATED)
+
+class AddToCartView(LoginRequiredMixin, APIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        summary="افزودن محضول به سبد خرید",
+    )
+    def get(self, request, product_id):
+        product = get_object_or_404(Product, id=product_id)
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+        cart_item.quantity += 1  # تعداد محصول را افزایش می‌دهد
+        cart_item.save()
+        return Response(None, status.HTTP_201_CREATED)
 
 
 class ListAddToCartView(LoginRequiredMixin, APIView):
