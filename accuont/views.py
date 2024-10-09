@@ -1,11 +1,9 @@
-from django.shortcuts import render
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse, OpenApiExample
+from drf_spectacular.utils import extend_schema
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework import status
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -33,7 +31,8 @@ class CustomAuthToken(ObtainAuthToken):
 class SignUpViews(APIView):
     @extend_schema(
         summary="ثبت نام کاربر",
-        request=UserSerializer
+        request=UserSerializer,
+        description="date_of_birth , adress , national_code : الزامی نیست"
     )
     def post(self, reqest: Request):
         serializer = UserSerializer(data=reqest.data)
@@ -65,9 +64,6 @@ class EditProfile(APIView):
         user = request.user
         data = request.data
         serializer = UserSerializer(instance=user, data=data)
-        print(serializer)
-        print("__________________")
-        print(data)
         if serializer.is_valid():
             serializer.save()
             return Response({"Details": "user updated"}, status=status.HTTP_200_OK)

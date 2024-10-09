@@ -1,8 +1,5 @@
 from drf_spectacular.utils import extend_schema
 from rest_framework import status, generics
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import api_view
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
