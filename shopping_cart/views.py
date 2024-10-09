@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from drf_spectacular.utils import extend_schema
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
@@ -10,6 +11,8 @@ from rest_framework import status
 
 
 class CartViews(APIView):
+    permission_classes = [IsAuthenticated]
+
     @extend_schema(
         summary="جزئیات سبد خرید کاربر",
         responses=CartSerializer
@@ -22,6 +25,8 @@ class CartViews(APIView):
 
     
 class CartPaidViews(APIView):
+    permission_classes = [IsAuthenticated]
+
     @extend_schema(
         summary="هزینه سبد خرید پرداخت میشود",
     )

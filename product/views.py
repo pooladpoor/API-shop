@@ -28,6 +28,8 @@ from .serializer import ComentSerializer
 
 
 class ListAddToCartView(LoginRequiredMixin, APIView):
+    permission_classes = [IsAuthenticated]
+
     def setup(self, request, *args, **kwargs):
         self.cart , created = Cart.objects.get_or_create(user=request.user)
         super().setup(request, *args, **kwargs)
@@ -59,14 +61,14 @@ class ListAddToCartView(LoginRequiredMixin, APIView):
 
 
 class AddComent(LoginRequiredMixin, APIView):
+    permission_classes = [IsAuthenticated]
+
     @extend_schema(
         request=ComentSerializer,
         summary="کامنت برای محصول",
     )
     def post(self, reqest: Request, product_id):
         user = reqest.user
-        if not user.is_authenticated:
-            return Response({"eror": "Anonymous User"}, status=status.HTTP_400_BAD_REQUEST)
         product = get_object_or_404(Product, id=product_id)
         
         serilizer = ComentSerializer(data=reqest.data)
@@ -79,6 +81,7 @@ class AddComent(LoginRequiredMixin, APIView):
             return Response(None, status=status.HTTP_201_CREATED)
         return Response({"eror": "data is not valid"}, status=status.HTTP_400_BAD_REQUEST)
 
+
 @extend_schema(
         summary="لیست دسته بندی ها",
             )
@@ -86,10 +89,11 @@ class CategoryList(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorytSerializer
 
+
 # region product
 
 @extend_schema(
-        summary="لیست محصولات",
+        summary="لیست همه محصولات",
             )
 class ProductList(generics.ListAPIView):
     queryset = Product.objects.all()

@@ -46,6 +46,8 @@ class SignUpViews(APIView):
 
 
 class EditProfile(APIView):
+    permission_classes = [IsAuthenticated]
+
     @extend_schema(
         summary="دریافت اطلاعات کاربر",
         responses=UserSerializer,
